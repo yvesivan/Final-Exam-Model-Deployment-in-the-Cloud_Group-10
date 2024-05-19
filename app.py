@@ -2,6 +2,7 @@ import streamlit as st
 import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
+import io
 
 st.set_page_config(page_title="Weather Detection System", page_icon=":partly_sunny:")
 
@@ -15,12 +16,19 @@ model = load_model()
 st.title("Weather Detection System")
 st.write("Cloudy: 🌥️  Rainy: 🌧️  Shiny: ☀️  Sunrise: 🌅")
 
-file = st.file_uploader("Upload a weather photo", type=["jpg", "jpeg", "png"])
+file = st.file_uploader("Upload a weather photo", type=["jpg", "jpeg", "png", "heic"])
 
 if file is None:
     st.write("Please upload an image file")
 else:
-    image = Image.open(file)
+    # Handling HEIC format
+    if file.type == 'application/octet-stream':
+        st.write("Converting HEIC to JPEG format...")
+        content = file.read()
+        image = Image.open(io.BytesIO(content)).convert("RGB")
+    else:
+        image = Image.open(file)
+
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
     if st.button('Detect Weather'):
