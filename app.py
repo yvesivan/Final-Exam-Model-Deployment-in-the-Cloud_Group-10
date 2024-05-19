@@ -31,7 +31,7 @@ else:
 
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
-    if st.button('Detect Weather'):
+    if st.button('Click here to detect the weather'):
         st.write("Detecting... 🔄")
         size = (150, 150)  
         image = ImageOps.fit(image, size)
