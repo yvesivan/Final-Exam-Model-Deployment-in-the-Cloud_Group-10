@@ -4,7 +4,7 @@ from PIL import Image, ImageOps
 import numpy as np
 import io
 
-st.set_page_config(page_title="Weather Detection System", page_icon=":partly_sunny:")
+st.set_page_config(page_title="Weather Satellite", page_icon=":partly_sunny:")
 
 @st.cache(allow_output_mutation=True)
 def load_model():
