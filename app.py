@@ -17,7 +17,7 @@ st.write("""
 file = st.file_uploader("Choose weather photo from computer", type=["jpg", "png"])
 
 def import_and_predict(image_data, model):
-    size = (48, 48)  
+    size = (150, 150)  
     image = ImageOps.fit(image_data, size)
     img = np.asarray(image)
     
