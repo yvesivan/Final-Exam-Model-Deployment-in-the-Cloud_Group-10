@@ -13,7 +13,7 @@ def load_model():
 
 model = load_model()
 
-st.title("Weather Detection System")
+st.title("Weather Satellite")
 st.write("Cloudy: 🌥️  Rainy: 🌧️  Shiny: ☀️  Sunrise: 🌅")
 
 file = st.file_uploader("Upload a weather photo", type=["jpg", "jpeg", "png", "heic"])
