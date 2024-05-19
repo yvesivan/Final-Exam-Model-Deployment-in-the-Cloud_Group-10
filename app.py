@@ -3,43 +3,38 @@ import tensorflow as tf
 from PIL import Image, ImageOps
 import numpy as np
 
-@st.cache_data(experimental_allow_widgets=True)
+st.set_page_config(page_title="Weather Detection System", page_icon=":partly_sunny:")
+
+@st.cache(allow_output_mutation=True)
 def load_model():
     model = tf.keras.models.load_model('Weather_Classification-Model.h5')
     return model
 
 model = load_model()
 
-st.write("""
-# Weather Detection System
-""")
+st.title("Weather Detection System")
 
-file = st.file_uploader("Choose weather photo from computer", type=["jpg", "png"])
-
-def import_and_predict(image_data, model):
-    size = (150, 150)  
-    image = ImageOps.fit(image_data, size)
-    img = np.asarray(image)
-    
-    # Normalize image array to [0, 1]
-    img = img / 255.0
-    
-    # Add a batch dimension
-    img_reshape = np.expand_dims(img, axis=0)
-
-    st.write(f"Image shape: {img_reshape.shape}")
-    st.write(f"Image dtype: {img_reshape.dtype}")
-    
-    prediction = model.predict(img_reshape)
-    return prediction
+file = st.file_uploader("Upload a weather photo", type=["jpg", "jpeg", "png"])
 
 if file is None:
-    st.text("Please upload an image file")
+    st.write("Please upload an image file")
 else:
     image = Image.open(file)
-    st.image(image, use_column_width=True)
-    prediction = import_and_predict(image, model)
-    
-    class_names = ['Cloudy', 'Rain', 'Shine', 'Sunrise']
-    string = "OUTPUT : " + class_names[np.argmax(prediction)]
-    st.success(string)
+    st.image(image, caption='Uploaded Image', use_column_width=True)
+
+    if st.button('Detect Weather'):
+        st.write("Detecting...")
+        size = (150, 150)  
+        image = ImageOps.fit(image, size)
+        img = np.asarray(image)
+        
+        # Normalize image array to [0, 1]
+        img = img / 255.0
+        
+        # Add a batch dimension
+        img_reshape = np.expand_dims(img, axis=0)
+        
+        prediction = model.predict(img_reshape)
+        
+        class_names = ['Cloudy', 'Rain', 'Shine', 'Sunrise']
+        st.write(f"Predicted weather: {class_names[np.argmax(prediction)]}")
