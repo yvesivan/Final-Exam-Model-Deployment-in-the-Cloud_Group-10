@@ -13,7 +13,7 @@ def load_model():
 model = load_model()
 
 st.title("Weather Detection System")
-st.write("🌥️ 🌧️ ☀️ 🌅")
+st.write("Cloudy: 🌥️  Rainy: 🌧️  Shiny: ☀️  Sunrise: 🌅")
 
 file = st.file_uploader("Upload a weather photo", type=["jpg", "jpeg", "png"])
 
@@ -24,7 +24,7 @@ else:
     st.image(image, caption='Uploaded Image', use_column_width=True)
 
     if st.button('Detect Weather'):
-        st.write("Detecting...")
+        st.write("Detecting... 🔄")
         size = (150, 150)  
         image = ImageOps.fit(image, size)
         img = np.asarray(image)
@@ -37,5 +37,5 @@ else:
         
         prediction = model.predict(img_reshape)
         
-        class_names = ['Cloudy', 'Rain', 'Shine', 'Sunrise']
+        class_names = ['🌥️ Cloudy', '🌧️ Rainy', '☀️ Shiny', '🌅 Sunrise']
         st.write(f"Predicted weather: {class_names[np.argmax(prediction)]}")
