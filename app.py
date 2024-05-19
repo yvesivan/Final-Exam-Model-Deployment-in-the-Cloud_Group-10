@@ -4,8 +4,7 @@ from PIL import Image, ImageOps
 import numpy as np
 import io
 
-# We set the theme
-st.set_theme('blue')
+st.set_page_config(page_title="Weather Detection System", page_icon=":partly_sunny:")
 
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -22,7 +21,7 @@ file = st.file_uploader("Upload a weather photo", type=["jpg", "jpeg", "png", "h
 if file is None:
     st.write("Please upload an image file")
 else:
-    # For handling HEIC format
+    # Handling HEIC format
     if file.type == 'application/octet-stream':
         st.write("Converting HEIC to JPEG format...")
         content = file.read()
